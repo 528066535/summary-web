@@ -4,8 +4,8 @@
 
   在MDN中是这么定义的。
   > A block formatting context contains everything inside of the element creating it that is not also inside a descendant
-  element that creates a new block formatting context.
-  > 一个BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。
+  element that creates a new block formatting context. </br>
+  > 一个BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。 </br>
 
   BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level（display 属性为 block, list-item, table 的元素）的
   Box如何布局，并且与这个区域外部毫不相干。
@@ -77,26 +77,26 @@
   ,可以理解为true的时候为BFC，false为IFC。
 
   #### 默认hasLayout==true的元素
-  > `<html>, <body>`
-  > `<table>, <tr>, <th>, <td>`
-  > `<img>,<hr>`
-  > `<input>, <button>, <select>, <textarea>, <fieldset>, <legend>`
-  > `<iframe>, <embed>, <object>, <applet>,<marquee>`
+  > `<html>, <body>` </br>
+  > `<table>, <tr>, <th>, <td>` </br>
+  > `<img>,<hr>` </br>
+  > `<input>, <button>, <select>, <textarea>, <fieldset>, <legend>` </br>
+  > `<iframe>, <embed>, <object>, <applet>,<marquee>` </br>
 
   #### 触发hasLayout==true的元素
-  > display: inline-block
-  > height: (除 auto 外任何值)
-  > width: (除 auto 外任何值)
-  > float: (left 或 right)
-  > position: absolute
-  > writing-mode: tb-rl
-  > zoom: (除 normal 外任意值)
+  > display: inline-block </br>
+  > height: (除 auto 外任何值) </br>
+  > width: (除 auto 外任何值) </br>
+  > float: (left 或 right) </br>
+  > position: absolute </br>
+  > writing-mode: tb-rl </br>
+  > zoom: (除 normal 外任意值) </br>
 
 
   #### IE7专有的触发hasLayout的CSS属性
-  > min-height/max-height/min-width/max-width:除none
-  > overflow\overflow-x\overflow-y:除visible
-  > position:fixed
+  > min-height/max-height/min-width/max-width:除none </br>
+  > overflow\overflow-x\overflow-y:除visible </br>
+  > position:fixed </br>
 
   IE6 以前的版本（也包括 IE6 及以后所有版本的混杂模式，其实这种混杂模式在渲染方面就相当于 IE 5.5）， 通过设置任何元素的 'width' 或
   'height'（非auto）都可以触发 hasLayout ； 但在 IE6 和 IE7 的标准模式中的行内元素上却不行，设置 'display:inline-block' 才可以。
@@ -104,19 +104,19 @@
   其中通过display:inline-block或min-width:0或min-height:0将不可逆地启用hasLayout特性。而在没有其他属性启用hasLayout时，
   可通过以下方式关闭hasLayout。
 
-  > max-width, max-height (设为 "none")(在IE7中)
-  > position (设为 "static")
-  > float (设为 "none")
-  > overflow (设为 "visible") (在IE7中)
-  > zoom (设为 "normal")
-  > writing-mode (从 "tb-rl" 设为 "lr-t")
+  > max-width, max-height (设为 "none")(在IE7中) </br>
+  > position (设为 "static") </br>
+  > float (设为 "none") </br>
+  > overflow (设为 "visible") (在IE7中) </br>
+  > zoom (设为 "normal") </br>
+  > writing-mode (从 "tb-rl" 设为 "lr-t") </br>
 
   而产生新BFC的CSS属性
 
-  > position:absolute/fixed
-  > float:left/right
-  > display:inline-block/table-cell/table-caption/flex/inline-flex
-  > overflow:(除visible外任意值)
+  > position:absolute/fixed </br>
+  > float:left/right </br>
+  > display:inline-block/table-cell/table-caption/flex/inline-flex </br>
+  > overflow:(除visible外任意值) </br>
 
   可以看到导致产生新BFC的方式和触发hasLayout==true的方式不完全重叠。因此hasLayout==true所引发的问题，很大程度可以理解为在不应该的或
   没有预料到的地方产生新的BFC导致的。
