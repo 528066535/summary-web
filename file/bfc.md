@@ -4,7 +4,7 @@
 
  在MDN中是这么定义的。
  >A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.
- *一个BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。*
+ >一个BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。
 
  BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level（display 属性为 block, list-item, table 的元素）的Box如何布局，并且与这个区域外部毫不相干。
 
