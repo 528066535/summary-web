@@ -19,13 +19,13 @@
   3. 每个元素的margin box的左边，与包含块border box的左边相接触（对于从左到右的格式化，否则相反）。即使存在浮动也是如此。
   提到包含块，那么什么是包含块？
 
-   ##### 根元素所在的包含块叫初始包含块 initial containing block。
-   ##### 对于其他元素，如果元素的position属性是relative或static，他的包含块是由最近的祖先块容器盒（block container ancestor box）的内容
-   区域（content edge：width属性和height属性确定的区域）创建的。
-   ##### 如果一个元素的position属性为fixed，他的包含块由视口创建或者由页面区域创建。
-   ##### 如果元素的position为absolute，他的包含块由最近的position不为static的祖先元素创建，具体创建方式如下：
-    A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
-    B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
+    * 根元素所在的包含块叫初始包含块 initial containing block。
+    * 对于其他元素，如果元素的position属性是relative或static，他的包含块是由最近的祖先块容器盒（block container ancestor box）的内容
+    区域（content edge：width属性和height属性确定的区域）创建的。
+    * 如果一个元素的position属性为fixed，他的包含块由视口创建或者由页面区域创建。
+    * 如果元素的position为absolute，他的包含块由最近的position不为static的祖先元素创建，具体创建方式如下：
+      A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
+      B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
 
   4. BFC的区域不会与float box叠加。
 
@@ -69,54 +69,3 @@
 
   6. 当一个 inline box 超过父元素的宽度时，它会被分割成多个boxes，这些 boxes 分布在多个 line box 中。如果子元素未设置强制换行的情况下，
   inline box将不可被分割，将会溢出父元素。
-
-### 五. hasLayout
-
-  hasLayout是IE7-浏览器的特有属性。hasLayout是一种只读属性，有两种状态：true或false。当其为true时，代表该元素有自己的布局，否则代表该
-  元素的布局继承于父元素
-  ,可以理解为true的时候为BFC，false为IFC。
-
-  #### 默认hasLayout==true的元素
-  > `<html>, <body>` </br>
-  > `<table>, <tr>, <th>, <td>` </br>
-  > `<img>,<hr>` </br>
-  > `<input>, <button>, <select>, <textarea>, <fieldset>, <legend>` </br>
-  > `<iframe>, <embed>, <object>, <applet>,<marquee>` </br>
-
-  #### 触发hasLayout==true的元素
-  > display: inline-block </br>
-  > height: (除 auto 外任何值) </br>
-  > width: (除 auto 外任何值) </br>
-  > float: (left 或 right) </br>
-  > position: absolute </br>
-  > writing-mode: tb-rl </br>
-  > zoom: (除 normal 外任意值) </br>
-
-
-  #### IE7专有的触发hasLayout的CSS属性
-  > min-height/max-height/min-width/max-width:除none </br>
-  > overflow\overflow-x\overflow-y:除visible </br>
-  > position:fixed </br>
-
-  IE6 以前的版本（也包括 IE6 及以后所有版本的混杂模式，其实这种混杂模式在渲染方面就相当于 IE 5.5）， 通过设置任何元素的 'width' 或
-  'height'（非auto）都可以触发 hasLayout ； 但在 IE6 和 IE7 的标准模式中的行内元素上却不行，设置 'display:inline-block' 才可以。
-
-  其中通过display:inline-block或min-width:0或min-height:0将不可逆地启用hasLayout特性。而在没有其他属性启用hasLayout时，
-  可通过以下方式关闭hasLayout。
-
-  > max-width, max-height (设为 "none")(在IE7中) </br>
-  > position (设为 "static") </br>
-  > float (设为 "none") </br>
-  > overflow (设为 "visible") (在IE7中) </br>
-  > zoom (设为 "normal") </br>
-  > writing-mode (从 "tb-rl" 设为 "lr-t") </br>
-
-  而产生新BFC的CSS属性
-
-  > position:absolute/fixed </br>
-  > float:left/right </br>
-  > display:inline-block/table-cell/table-caption/flex/inline-flex </br>
-  > overflow:(除visible外任意值) </br>
-
-  可以看到导致产生新BFC的方式和触发hasLayout==true的方式不完全重叠。因此hasLayout==true所引发的问题，很大程度可以理解为在不应该的或
-  没有预料到的地方产生新的BFC导致的。
