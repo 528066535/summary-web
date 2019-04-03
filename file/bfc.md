@@ -3,10 +3,12 @@
   BFC全称是Block Formatting Context，即块格式化上下文。
 
   在MDN中是这么定义的。
-  > A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.
+  > A block formatting context contains everything inside of the element creating it that is not also inside a descendant
+  element that creates a new block formatting context.
   > 一个BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。
 
-  BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level（display 属性为 block, list-item, table 的元素）的Box如何布局，并且与这个区域外部毫不相干。
+  BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level（display 属性为 block, list-item, table 的元素）的
+  Box如何布局，并且与这个区域外部毫不相干。
 
 ### 二. BFC布局规则
 
@@ -18,11 +20,12 @@
   提到包含块，那么什么是包含块？
 
     * 根元素所在的包含块叫初始包含块 initial containing block。
-    * 对于其他元素，如果元素的position属性是relative或static，他的包含块是由最近的祖先块容器盒（block container ancestor box）的内容区域（content edge：width属性和height属性确定的区域）创建的。
+    * 对于其他元素，如果元素的position属性是relative或static，他的包含块是由最近的祖先块容器盒（block container ancestor box）的内容
+    区域（content edge：width属性和height属性确定的区域）创建的。
     * 如果一个元素的position属性为fixed，他的包含块由视口创建或者由页面区域创建。
     * 如果元素的position为absolute，他的包含块由最近的position不为static的祖先元素创建，具体创建方式如下：
-        A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
-        B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
+      A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
+      B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
 
   4. BFC的区域不会与float box叠加。
 
@@ -50,12 +53,13 @@
 
 ### 四. IFC
 
-  与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block, inline-table）
-  的Box如何布局，块级元素中仅包含内联级别元素,需要注意的是当IFC中有块级元素插入时，会产生两个匿名块将父元素分割开来，产生两个IFC。
+  与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block,
+  inline-table）的Box如何布局，块级元素中仅包含内联级别元素,需要注意的是当IFC中有块级元素插入时，会产生两个匿名块将父元素分割开来，产生两个IFC。
 
   1. 子元素水平方向横向排列（float元素会优先排列），并且垂直方向起点为元素顶部。
 
-  2. IFC的line box（线框）高度由其包含行内元素中最高的实际高度计算而来（不受到竖直方向的padding/margin影响)，同个IFC下的多个line box高度可能会不同。
+  2. IFC的line box（线框）高度由其包含行内元素中最高的实际高度计算而来（不受到竖直方向的padding/margin影响)，同个IFC下的多个line box
+  高度可能会不同。
 
   3. 在垂直方向上，子元素会以不同形式来对齐（vertical-align）。
 
@@ -63,8 +67,56 @@
 
   5. 当 inline-level boxes的总宽度少于包含它们的line box时，其水平渲染规则由 text-align 属性值来决定。
 
-  6. 当一个 inline box 超过父元素的宽度时，它会被分割成多个boxes，这些 boxes 分布在多个 line box 中。如果子元素未设置强制换行的情况下，inline box
-  将不可被分割，将会溢出父元素。
+  6. 当一个 inline box 超过父元素的宽度时，它会被分割成多个boxes，这些 boxes 分布在多个 line box 中。如果子元素未设置强制换行的情况下，
+  inline box将不可被分割，将会溢出父元素。
 
 ### 五. hasLayout
 
+  hasLayout是IE7-浏览器的特有属性。hasLayout是一种只读属性，有两种状态：true或false。当其为true时，代表该元素有自己的布局，否则代表该
+  元素的布局继承于父元素
+  ,可以理解为true的时候为BFC，false为IFC。
+
+  #### 默认hasLayout==true的元素
+  > <html>, <body>
+  > <table>, <tr>, <th>, <td>
+  > <img>,<hr>
+  > <input>, <button>, <select>, <textarea>, <fieldset>, <legend>
+  > <iframe>, <embed>, <object>, <applet>,<marquee>
+
+  #### 触发hasLayout==true的元素
+  > display: inline-block
+  > height: (除 auto 外任何值)
+  > width: (除 auto 外任何值)
+  > float: (left 或 right)
+  > position: absolute
+  > writing-mode: tb-rl
+  > zoom: (除 normal 外任意值)
+
+
+  #### IE7专有的触发hasLayout的CSS属性
+  > min-height/max-height/min-width/max-width:除none
+  > overflow\overflow-x\overflow-y:除visible
+  > position:fixed
+
+  IE6 以前的版本（也包括 IE6 及以后所有版本的混杂模式，其实这种混杂模式在渲染方面就相当于 IE 5.5）， 通过设置任何元素的 'width' 或
+  'height'（非auto）都可以触发 hasLayout ； 但在 IE6 和 IE7 的标准模式中的行内元素上却不行，设置 'display:inline-block' 才可以。
+
+  其中通过display:inline-block或min-width:0或min-height:0将不可逆地启用hasLayout特性。而在没有其他属性启用hasLayout时，
+  可通过以下方式关闭hasLayout。
+
+  > max-width, max-height (设为 "none")(在IE7中)
+  > position (设为 "static")
+  > float (设为 "none")
+  > overflow (设为 "visible") (在IE7中)
+  > zoom (设为 "normal")
+  > writing-mode (从 "tb-rl" 设为 "lr-t")
+
+  而产生新BFC的CSS属性
+
+  > position:absolute/fixed
+  > float:left/right
+  > display:inline-block/table-cell/table-caption/flex/inline-flex
+  > overflow:(除visible外任意值)
+
+  可以看到导致产生新BFC的方式和触发hasLayout==true的方式不完全重叠。因此hasLayout==true所引发的问题，很大程度可以理解为在不应该的或
+  没有预料到的地方产生新的BFC导致的。
