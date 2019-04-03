@@ -77,11 +77,11 @@
   ,可以理解为true的时候为BFC，false为IFC。
 
   #### 默认hasLayout==true的元素
-  > <html>, <body>
-  > <table>, <tr>, <th>, <td>
-  > <img>,<hr>
-  > <input>, <button>, <select>, <textarea>, <fieldset>, <legend>
-  > <iframe>, <embed>, <object>, <applet>,<marquee>
+  > `<html>, <body>`
+  > `<table>, <tr>, <th>, <td>`
+  > `<img>,<hr>`
+  > `<input>, <button>, <select>, <textarea>, <fieldset>, <legend>`
+  > `<iframe>, <embed>, <object>, <applet>,<marquee>`
 
   #### 触发hasLayout==true的元素
   > display: inline-block
