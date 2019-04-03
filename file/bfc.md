@@ -8,8 +8,6 @@
 
  BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level（display 属性为 block, list-item, table 的元素）的Box如何布局，并且与这个区域外部毫不相干。
 
- 与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block, inline-table）的Box如何布局。
-
 ### 二. BFC布局规则
 
  1. BFC内部的盒子会从顶部开始在垂直方向上一个一个排列。
@@ -40,14 +38,29 @@
 
 ### 三. 如何创建BFC
 
- * 1. 根元素或者其他包含他的元素。
+ 1. 根元素或者其他包含他的元素。
 
- * 2. float属性不为none
+ 2. float属性不为none
 
- * 3. display为inline-block, table-cell, table-caption, flex, inline-flex
+ 3. display为inline-block, table-cell, table-caption, flex, inline-flex
 
- * 4. position 属性值为：absolute | fixed
+ 4. position 属性值为：absolute | fixed
 
- * 5. overflow不为visible
+ 5. overflow不为visible
 
+### 四. IFC
+
+ 与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block, inline-table）的Box如何布局，块级元素中仅包含内联级别元素。
+
+ 1. 子元素水平方向横向排列（float元素会优先排列），并且垂直方向起点为元素顶部。
+
+ 2. IFC的line box（线框）高度由其包含行内元素中最高的实际高度计算而来（不受到竖直方向的padding/margin影响)，同个IFC下的多个line box高度可能会不同。
+
+ 3. 在垂直方向上，子元素会以不同形式来对齐（vertical-align）。
+
+ 4. 能把在一行上的框都完全包含进去的一个矩形区域，被称为该行的行框（line box）。行框的宽度是由包含块（containing box）和与其中的浮动来决定。
+
+ 5. 当 inline-level boxes的总宽度少于包含它们的line box时，其水平渲染规则由 text-align 属性值来决定。
+
+ 6. 当一个 inline box 超过父元素的宽度时，它会被分割成多个boxes，这些 boxes 分布在多个 line box 中。如果子元素未设置强制换行的情况下，“inline box”将不可被分割，将会溢出父元素。
 
