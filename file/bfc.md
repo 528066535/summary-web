@@ -50,7 +50,8 @@
 
 ### 四. IFC
 
- 与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block, inline-table）的Box如何布局，块级元素中仅包含内联级别元素。
+ 与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block, inline-table）的Box如何布局，块级元素中仅包含内联级别元素,
+ 需要注意的是当IFC中有块级元素插入时，会产生两个匿名块将父元素分割开来，产生两个IFC。
 
  1. 子元素水平方向横向排列（float元素会优先排列），并且垂直方向起点为元素顶部。
 
