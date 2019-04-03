@@ -6,9 +6,9 @@
  >A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.
  *一个BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。*
 
- BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。
+ BFC是可翻译为块级格式化上下文。它是一个独立的渲染区域，规定了内部的Block-level（display 属性为 block, list-item, table 的元素）的Box如何布局，并且与这个区域外部毫不相干。
 
- 与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level的Box如何布局。
+ 与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level（display 属性为 inline, inline-block, inline-table）的Box如何布局。
 
 ### 二. BFC布局规则
 
@@ -25,6 +25,18 @@
     * 如果元素的position为absolute，他的包含块由最近的position不为static的祖先元素创建，具体创建方式如下：
         A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
         B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
+
+ 4. BFC的区域不会与float box叠加
+
+    正常情况下float元素会浮动在某个元素上方，当这个元素设置BFC后，则这个元素与浮动区域分开。
+
+ 5. BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+
+    和第二条对应，可以去掉相邻Box的margin重叠现象。
+
+ 6. 计算BFC高度时，浮动元素也参与计算。
+
+    清浮动的原理。
 
 ### 三. 如何创建BFC
 
