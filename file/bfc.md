@@ -1,4 +1,4 @@
-一. 什么是BFC，如何定义BFC？
+## 一. 什么是BFC，如何定义BFC？
 
     BFC全称是Block Formatting Context，即块格式化上下文。
 
@@ -10,7 +10,7 @@
 
     与Block Formatting Context对应的是Inline formatting context，规定了内部的inline-level的Box如何布局。
 
-二. BFC布局规则
+## 二. BFC布局规则
 
     -1. BFC内部的盒子会从顶部开始在垂直方向上一个一个排列。
 
@@ -26,7 +26,7 @@
            A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
            B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
 
-三. 如何创建BFC
+## 三. 如何创建BFC
 
     * 1. 根元素或者其他包含他的元素。
 
