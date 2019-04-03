@@ -20,11 +20,8 @@
  提到包含块，那么什么是包含块？
 
     * 根元素所在的包含块叫初始包含块 initial containing block。
-
     * 对于其他元素，如果元素的position属性是relative或static，他的包含块是由最近的祖先块容器盒（block container ancestor box）的内容区域（content edge：width属性和height属性确定的区域）创建的。
-
     * 如果一个元素的position属性为fixed，他的包含块由视口创建或者由页面区域创建。
-
     * 如果元素的position为absolute，他的包含块由最近的position不为static的祖先元素创建，具体创建方式如下：
         A.如果创建包含块的祖先元素是行内元素（inline element），包含块的范围是这个祖先元素中的第一个和最后一个行内盒的padding box围起来的区域。
         B.如果这个祖先元素不是行内元素，包含块的范围是这个祖先元素的内边距+width区域（padding edge）。
