@@ -1,7 +1,7 @@
 
     我承认，之前我确实不太懂vertical-align属性
 
-### 一. 概念
+### 一. vertical-align 概念
 
  vertical-align用在哪些元素上面？
 
@@ -10,11 +10,21 @@
 
  内联盒子的组成？
 
+ 内联盒子由四部分组成。
+
+ 1. containing box。外层盒模型的大小。
+
+ 2. line boxes。一行算一个line boxes。
+
+ 3. inline boxes。简单的说就是一个元素标签，如，span。
+
+ 4. content area。围绕文字看不见的box，其大小与font-size有关，其高度可以认为鼠标选中文字时背景色的高度。
+
  ![内联盒子的组成](/img/va1.jpg)
 
- 什么是基线？简单的说，基线就是字母x底部所在的位置。在css中这叫baseline。
+### 二. 基线，baseline。
 
-### 二. baseline的确定规则
+ 什么是基线？简单的说，基线就是字母x底部所在的位置。在css中这叫baseline。
 
  1. inline-table元素的baseline是它的table第一行的baseline。
 
