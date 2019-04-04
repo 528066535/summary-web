@@ -14,6 +14,8 @@
 
  什么是基线？简单的说，基线就是字母x底部所在的位置。在css中这叫baseline。
 
+### 二. baseline的确定规则
+
  1. inline-table元素的baseline是它的table第一行的baseline。
 
  2.
