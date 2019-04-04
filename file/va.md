@@ -9,6 +9,7 @@
  这个属性会设置单元格框中的单元格内容的对齐方式。简单地说，就是 to inline-level and 'table-cell' elements 。
 
  内联盒子的组成？
+
  ![内联盒子的组成](/img/va1.jpg)
 
  什么是基线？简单的说，基线就是字母x底部所在的位置。在css中这叫baseline。
