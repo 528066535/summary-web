@@ -30,7 +30,7 @@
 
  4. bottom。 与 top 相反，与父级元素的最低端对齐 ，会受到 line-height 影响 ;
 
- 5. text-top。 与父级元素 content area 的顶端对齐，不受行高以及周边其他元素的影响 ;
+ 5. text-top。 与父级元素 [content area] 的顶端对齐 ;
 
  6. text-bottom。 与 text-top 相反，始终与父级元素 content area 的低端对齐。
 
@@ -45,5 +45,11 @@
 
  1. inline-table元素的baseline是它的table第一行的baseline。
 
- 2.
+ 2. 父元素 [line box] 的baseline是最后一个inline box 的baseline。
 
+ 3. inline-block元素的baseline确定规则
+
+  * 规则1：inline-block元素，如果内部有line box，则inline-block元素的baseline就是最后一个作为内容存在的元素[inline box]的baseline，
+  而这个元素的baseline的确定就要根据它自身来定了。
+
+  * 规则2：inline-block元素，如果其内部没有line box或它的overflow属性不是visible，那么baseline将是这个inline-block元素的底margin边界。
