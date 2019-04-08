@@ -102,4 +102,23 @@
 
   2. 水平也有空隙,这里的空隙是因为换行导致中间产生的空隙.解决办法是加注释<!-- 注释去空格加一个回车 -->
 
+### 五. vertical-align:middle会下移动元素
 
+  ![下移](/img/va-2.png)
+
+  1. 问题描述
+   设置了第二个白色方块vertical-align:middle;发现这个块并没有居中,反而下移了.
+
+  2. 原因:、
+   vertical-align middle的定位方式是:将子元素盒子的垂直中点与父盒子的baseline加上父盒子的x-height的一半位置对齐.x-height和字体大小,
+   还有字体样式有关,所以,如果想用vertical-align middle来设置垂直居中,可能会有细微的误差.
+
+  3. 就解决办法
+
+  一种方式是将最高的元素设为vertical-align:middle,然后将想要居中的也设定为vertical-align:middle.最高的会把整个盒子撑开,baseline + x-height
+  就约在整个盒子中间的位置了.
+
+  4. 垂直居中一种方案
+
+  为父元素设置:after伪元素,display:inline-block,vertical-align:middle,这样就能撑开父元素了.再设置所有子元素vertical-align:middle,
+  达到居中的目的.注意:由于IE8不支持:after伪元素,可用span替代.
