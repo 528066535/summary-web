@@ -18,7 +18,7 @@
 
  4. content area.围绕文字看不见的box,其大小与font-size有关,其高度可以认为鼠标选中文字时背景色的高度.
 
- ![内联盒子的组成](/img/va1.jpg)
+ ![内联盒子的组成](/img/va-1.jpg)
 
  vertical-align的取值：
 
@@ -74,4 +74,4 @@
    </div>
   ```
 
-  ![下方的空隙](/img/va2.jpg)
+  ![下方的空隙](/img/va-2.jpg)
