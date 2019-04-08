@@ -63,13 +63,13 @@
 
   1. 正常情况下,下方会有空隙
 
-  > <div class="ctn-block">
-  >  <img style="height:100px;width:100px;">
-  >  <div class="child child-1"></div>
-  >  <div class="child child-2"></div>
-  >  <div class="child child-3"></div>
-  >  <span>123</span>
-  >  <img style="height:100px;width:100px;">
-  > </div>
+  > <div class="ctn-block"> </br>
+  >  <img style="height:100px;width:100px;"> </br>
+  >  <div class="child child-1"></div> </br>
+  >  <div class="child child-2"></div> </br>
+  >  <div class="child child-3"></div> </br>
+  >  <span>123</span> </br>
+  >  <img style="height:100px;width:100px;"> </br>
+  > </div> </br>
 
   ![下方的空隙](/img/va2.jpg)
