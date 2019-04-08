@@ -66,6 +66,27 @@
   代码：
 
   ```
+    <style>
+      .ctn-block{
+          background-color: #bbb;
+      }
+      .ctn-block .child {
+      display: inline-block;
+      width: 100px;
+      background-color: aliceblue;
+    }
+    .ctn-block .child-1 {
+      height: 100px;
+    /*    vertical-align: middle;*/
+    }
+    .ctn-block .child-2 {
+      height: 200px;
+    }
+    .ctn-block .child-3 {
+      height: 300px;
+    }
+    </style>
+
      <div class="ctn-block">
       <img style="height:100px;width:100px;">
       <div class="child child-1"></div>
