@@ -63,16 +63,20 @@
 
   ![下方的空隙](/img/va-2.png)
 
-  1. 正常情况下,下方会有空隙
+  代码：
 
   ```
-   <div class="ctn-block">
-    <img style="height:100px;width:100px;">
-    <div class="child child-1"></div>
-    <div class="child child-2"></div>
-    <div class="child child-3"></div>
-    <span>123</span>
-    <img style="height:100px;width:100px;">
-   </div>
-  ```
+     <div class="ctn-block">
+      <img style="height:100px;width:100px;">
+      <div class="child child-1"></div>
+      <div class="child child-2"></div>
+      <div class="child child-3"></div>
+      <span>123</span>
+      <img style="height:100px;width:100px;">
+     </div>
+   ```
+
+  1. 正常情况下,下方会有空隙
+
+
 
