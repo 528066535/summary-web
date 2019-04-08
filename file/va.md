@@ -68,34 +68,34 @@
   ```
     <style>
       .ctn-block{
-          background-color: #bbb;
+        background-color: #bbb;
       }
       .ctn-block .child {
-      display: inline-block;
-      width: 100px;
-      background-color: aliceblue;
-    }
-    .ctn-block .child-1 {
-      height: 100px;
-    /*    vertical-align: middle;*/
-    }
-    .ctn-block .child-2 {
-      height: 200px;
-    }
-    .ctn-block .child-3 {
-      height: 300px;
-    }
+        display: inline-block;
+        width: 100px;
+        background-color: aliceblue;
+      }
+      .ctn-block .child-1 {
+        height: 100px;
+        /*    vertical-align: middle;*/
+      }
+      .ctn-block .child-2 {
+        height: 200px;
+      }
+      .ctn-block .child-3 {
+        height: 300px;
+      }
     </style>
 
-     <div class="ctn-block">
+    <div class="ctn-block">
       <img style="height:100px;width:100px;">
       <div class="child child-1"></div>
       <div class="child child-2"></div>
       <div class="child child-3"></div>
       <span>123</span>
       <img style="height:100px;width:100px;">
-     </div>
-   ```
+    </div>
+  ```
 
   1. 正常情况下,下方会有空隙,由于默认ctn-block,span,img的vertical-align取值是baseline,而baseline下方会给字母留一点空隙,
   导致了我们看到了下面会有一点点空隙.解决办法是加上vertical-align:middle.
