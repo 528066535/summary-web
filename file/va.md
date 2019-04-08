@@ -57,7 +57,7 @@
 ### 三. vertical-align的top属性和text-top属性
 
   这两个属性看起来有点像,但是实际上区别很大,top是针对当前行中最顶端高度的元素对齐,会受到line-height的影响,有一个line-height,看起来的高度会高有点了.
-  text-top是当前行中文字最顶端的位置对齐,不会受到line-height的影响.平时用的话，一般都会用top.
+  text-top是当前行中文字最顶端的位置对齐.
 
 ### 四. 空隙
 
