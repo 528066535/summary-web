@@ -71,7 +71,7 @@
 
   5. 获取屏幕宽度
 
-  ![屏幕的宽高](/img/sp-4.jpg)
+  ![屏幕的宽高](/img/sp-4.png)
 
   屏幕分辨率：screen.width+"/"+screen.height
 
