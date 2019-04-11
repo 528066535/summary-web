@@ -29,11 +29,11 @@
   a. layout viewport: 在移动端,可视区域会很小,viewport如果为可视区域,那一个页面的宽度会很小很小,排版都会错乱,所以在移动端会默认设置一个
   layout viewport,可以通过 document.documentElement.clientWidth 来获取,如下图所示:
 
-  ![flex基本知识](/img/sp-2.jpg)
+  ![layout viewport](/img/sp-2.jpg)
 
   b. 那么在移动端,就用visual viewport来表示可视区域了,可以用 window.innerWidth 来获取,如下图所示
 
-  ![flex基本知识](/img/sp-3.jpg)
+  ![visual viewport](/img/sp-3.jpg)
 
   c. 除了以上两个viewport,浏览器规定了另外一个更适合移动端的 ideal viewport ,简单地说 ideal viewport 等同于设备的宽度,
   ideal viewport并没有固定的尺寸,每款手机都可能不同,苹果手机6一下都是320,[具体查询链接](http://viewportsizes.com/?filter=IOS)
