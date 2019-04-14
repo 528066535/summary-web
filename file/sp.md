@@ -3,17 +3,17 @@
 
 ### 一. 基础概念
 
-（1）非css的概念:
+####（1）非css的概念:
 
- #### 1. 物理像素
+ ##### 1. 物理像素
 
  手机屏幕上显示的最小单元，该最小单元具有颜色及亮度的属性可供设置，iphone6、7、8 为：750 * 1334，iphone6+、7+、8+ 为 1242 * 2208。
 
- #### 2. 设备独立像素
+ ##### 2. 设备独立像素
 
  此为逻辑像素，计算机设备中的一个点，css 中设置的像素指的就是该像素。老早在没有 retina 屏之前，设备独立像素与物理像素是相等的。
 
- #### 3. 设备像素比(devicePixelRatio)
+ ##### 3. 设备像素比(devicePixelRatio)
 
  设备像素比(dpr) = 物理像素/设备独立像素。如 iphone 6、7、8 的 dpr 为 2，那么一个设备独立像素便为 4 个物理像素，因此在 css 上设置的
  1px 在其屏幕上占据的是 2个物理像素，0.5px 对应的才是其所能展示的最小单位。这就是 1px 在 retina 屏上变粗的原因，目前有很多办法来解决这一问题。
@@ -76,13 +76,13 @@
 
   缺点也是会有圆角模糊的问题.
 
-（2）#### css中的概念:
+####（2）css中的概念:
 
- #### 1. pc端的viewport
+ ##### 1. pc端的viewport
 
   在pc端上viewport通常代表的是可视区域,改变浏览器大小的时候viewport也随之改变.
 
- #### 2. 移动端的viewport会比较复杂
+ ##### 2. 移动端的viewport会比较复杂
 
   a. layout viewport: 在移动端,可视区域会很小,viewport如果为可视区域,那一个页面的宽度会很小很小,排版都会错乱,所以在移动端会默认设置一个
   layout viewport,可以通过 document.documentElement.clientWidth 来获取,如下图所示:
@@ -96,7 +96,7 @@
   c. 除了以上两个viewport,浏览器规定了另外一个更适合移动端的 ideal viewport ,简单地说 ideal viewport 等同于设备的宽度,
   ideal viewport并没有固定的尺寸,每款手机都可能不同,苹果手机6一下都是320,[具体查询链接](http://viewportsizes.com/?filter=IOS)
 
- #### 3. meta
+ ##### 3. meta
 
   在移动端中,默认的 viewport 是 layout viewport, 但是实际的开发过程, 我们需要改成 ideal viewport, 这时候就需要用到 meta.
 
@@ -111,7 +111,7 @@
     user-scalable: 是否允许用户进行缩放，值为"no"或"yes", no 代表不允许，yes代表允许
     height: 设置layout viewport  的高度，这个属性对我们并不重要，很少使用
 
-  #### 4. 关于缩放以及initial-scale的默认值
+  ##### 4. 关于缩放以及initial-scale的默认值
 
    由于px和实际的像素有区别,一个屏幕的initial-scale=2的时候,一个px代表2个实际的像素,那么如果屏幕的ideal viewport的宽度是640px,那么,
    css中px设置成320,则可以占满屏幕.那么我们可以知道:
@@ -127,7 +127,7 @@
 
     前缩放值 = ideal viewport宽度  / visual viewport宽度
 
-  #### 5. 获取屏幕宽度
+  ##### 5. 获取屏幕宽度
 
   ![屏幕的宽高](/img/sp-4.png)
 
