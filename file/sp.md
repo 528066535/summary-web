@@ -3,7 +3,7 @@
 
 ### 一. 基础概念
 
- 非css的概念:
+ （1）非css的概念:
 
  #### 1. 物理像素
 
@@ -18,7 +18,65 @@
  设备像素比(dpr) = 物理像素/设备独立像素。如 iphone 6、7、8 的 dpr 为 2，那么一个设备独立像素便为 4 个物理像素，因此在 css 上设置的
  1px 在其屏幕上占据的是 2个物理像素，0.5px 对应的才是其所能展示的最小单位。这就是 1px 在 retina 屏上变粗的原因，目前有很多办法来解决这一问题。
 
- #### css中的概念:
+ 办法一:
+
+  使用媒体查询
+
+  ```
+  @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-aspect-ratio: 1.5) {
+      .border-1px{
+          &::after{
+              transform:scaleY(0.7);    //1.5 * 0.7接近1
+          }
+      }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 2),(min-device-aspect-ratio: 2) {
+      .border-1px{
+          &::after{
+              transform:scaleY(0.5);    //2 * 0.5 = 1
+          }
+      }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 2.5),(min-device-aspect-ratio: 2.5) {
+      .border-1px{
+          &::after{
+              transform:scaleY(0.4);    //2.5 * 0.4 = 1
+          }
+      }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-aspect-ratio: 3) {
+      .border-1px{
+          &::after{
+              transform:scaleY(0.333);    //3 * 0.333 接近 1
+          }
+      }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 3.5),(min-device-aspect-ratio: 3.5) {
+      .border-1px{
+          &::after{
+              transform:scaleY(0.2857);    //3.5 * 0.2857 接近 1
+          }
+      }
+  }
+  ```
+
+  缺点: 不能画圆角.
+
+  办法二:
+
+  淘宝flexible方案，后面有讲到。
+
+  办法三:
+
+  border-image,
+
+  缺点也是会有圆角模糊的问题.
+
+ （2）#### css中的概念:
 
  #### 1. pc端的viewport
 
@@ -107,9 +165,86 @@
 
 ### 三. rem方案
 
- #### 1. em作为font-size的单位时,其代表父元素的字体大小,他是一个相对的大小,可精确到小数点后三位,计算方法是(需要转换的像素值/父元素的font-size),
+ #### 1. em
 
+ 作为font-size的单位时,其代表父元素的字体大小,他是一个相对的大小,可精确到小数点后三位,计算方法是(需要转换的像素值/父元素的font-size),
+ 如果a元素font-size为16px, b元素为a的子元素, b font-size 设置 1.25rem 换算后为 1.25 * 16 = 20px , b 的子元素 font-size设置为
+ 1.5 rem, 换算后为 1.5 * 20 = 30px .
 
+ ### 2. rem
+
+ * 简单的理解,rem就是相对于根元素<html>的font-size来做计算. rem 最本质的区别在于, em以父元素为计算值, rem是以根元素未计算值, html默认font-size为16px, 则在其他元素1rem代表16px.
+
+ * 实际的应用
+
+ 假如设计稿给我们的宽度是750px, 我们想用1rem代表10像素, 那么在iPhone 5s下可以用 20 * clientWidth（375）/750 , 但是如果屏幕变成
+ iPhone 5s, 屏幕可能就只有 320px了, 这时候, 字体相应的比例要缩小 375/320 的比例了, 所以这时候 1 rem 代表的10像素也要缩小等比的倍数,
+ 可以看成 20 * clientWidth（320）/750 ,这样就行了
+
+ 网易（类似做法）:
+
+ ```
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+ ;(function (doc, win) {
+     var docEl = doc.documentElement,
+         resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+         recalc = function () {
+             var clientWidth = docEl.clientWidth;
+             if(typeof(clientWidth)=='number' && clientWidth < 750 && clientWidth>319){
+                 docEl.style.fontSize = 20 * (clientWidth / 375) + 'px';
+             }else if(typeof(clientWidth)=='number' && clientWidth>750){
+                 docEl.style.fontSize = '40'+'px';
+             }
+         };
+     if (!doc.addEventListener) return;
+     win.addEventListener(resizeEvt, recalc, false);
+     doc.addEventListener('DOMContentLoaded', recalc, false);
+     recalc();
+ })(document, window);
+ ```
+
+ 淘宝（rem方案）:
+
+ (1). 这么做目的当然是为了保证页面的大小与设计稿保持一致了,比如设计稿如果是750的横向分辨率,那么实际页面的device-width,以iphone6来说,
+ 也等于750,这样的话设计稿上标注的尺寸只要除以某一个值就能够转换为rem了.
+
+ ```
+ if (!dpr && !scale) {
+    var isAndroid = win.navigator.appVersion.match(/android/gi);
+    var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+    var devicePixelRatio = win.devicePixelRatio;
+    if (isIPhone) {
+        // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+        if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+        } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
+            dpr = 2;
+        } else {
+            dpr = 1;
+        }
+    } else {
+        // 其他设备下，仍旧使用1倍的方案
+        dpr = 1;
+    }
+    scale = 1 / dpr;
+ }
+
+ document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+ ```
+
+    可视视口的宽度为 10 rem， 对应设计稿的宽度，则 1 rem 对应设计稿宽度的 1 / 10，换算时将设计稿中的长度数值除以 (设计稿宽度/10) 就可以了。
+    例如：设计稿的宽度为 750 则设计稿中的长度数值除以 75 得到的就是以 rem 为单位的 css 长度的数值
+
+ (2). html元素的font-size的计算公式,font-size = deviceWidth / 10
+
+ document.documentElement.style.fontSize = document.documentElement.clientWidth / 10 + 'px';
+
+ (3). 布局的时候，各元素的css尺寸=设计稿标注尺寸/设计稿横向分辨率/10
+
+ ### 3. 总结
+
+ 整体来看,淘宝的方案在 iPhone 手机的适配更加细致, 考虑到了3倍屏幕, 在换算的角度上来看, 网易换算方式比淘宝简易.
 
 ### 四. flex方案
 
@@ -117,6 +252,22 @@
 
   ![flex基本知识](/img/sp-1.jpg)
 
- #### 2. 淘宝手机H5 Flexible 适配方案
+  部分地方可以选择用flex来支持.
 
-### 五. 最新方案
+#### 五. vw方案
+
+ 1. 简单的说
+
+ * vw:是Viewport's width的简写,1vw等于window.innerWidth的1%
+
+ * vh:和vw类似，是Viewport's height的简写，1vh等于window.innerHeihgt的1%
+
+ * vmin:vmin的值是当前vw和vh中较小的值
+
+ * vmax:vmax的值是当前vw和vh中较大的值
+
+ 2. 原理: 100vw = 750px
+
+ 3. 兼容性
+
+ 兼容性问题(在移动端 iOS 8 以上以及 Android 4.4 以上获得支持，并且在微信 x5 内核中也得到完美的全面支持)
