@@ -95,7 +95,7 @@
   getType.call([])                      输出      [object Array]
   getType.call(function(){})            输出      [object Function]
   getType.call(new Date())              输出      [object Date]
- '''
+  ```
 
   #### 函数
 
