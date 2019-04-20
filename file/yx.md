@@ -175,7 +175,7 @@
  * apply 、 call 、bind 三者都可以利用后续参数传参；
  * bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。
 
- ### 二. 判断是否相等
+ ### 二. 数据类型值的判断
 
  #### == 和 ===
 
@@ -210,33 +210,32 @@
 
  #### 隐式类型转换
 
- * 为什么 []==false ?
+ (1) 为什么 []==false ?
 
  首先, 我们知道 [] 是对象, false 是布尔类型, 类型不同, 需要转换后才能比较. 在 == 的判断中, 如果有 布尔值, 会转化为数值 Number(false)
  结果为 0 ,
 
- * 为什么 []==0 ？
+ (2) 为什么 []==0 ？
 
  []在此时调用toString()方法, 相当于调用 join('') , 结果为 ''. ''==0 所以相等了.
 
- * 为什么 !![] 是 true
+ (3) 为什么 !![] 是 true
 
  !![] 这里并没有用到两个值的比较 , 只是看他是不是为空 , 而我们要知道 Falsy 的值有 0 , '' , false , NaN , null , undefined .
  所以 !![] 为true .
 
- * 为什么 null == 0 是 false ？
+ (4) 为什么 null == 0 是 false ？
 
  因为 null 和 0 是原始的数据类型了, 不能再转化成原始数据类型进行比较了 , 所以只能为 false 了.
 
- * 为什么 null == undefined ？
+ (5) 为什么 null == undefined ？
 
  JS的规定.哈哈
 
- * 为什么 NaN !== NaN ？
+ (6) 为什么 NaN !== NaN ？
 
  先看另外一个问题 'abc' == NaN , 因为 NaN 是数字类型 , 'abc' 需要转化成 数字类型 Number('abc') , 返回的确实是 NaN , 但是假设
  NaN 和 NaN 相等 , 那是不是 'abc' 也和 NaN 相等了 , 所以就有了这个结果 .
-
 
  ### 三. 原型和原型链
 
@@ -317,7 +316,6 @@
   person1.constructor == Person;
   ```
 
- ![layout viewport](/img/yx-1.png)
  ![layout viewport](/img/yx-2.webp)
 
  由于 __proto__ 是任何对象都有的属性, 而js里万物皆对象, 所以会形成一条 __proto__ 连接起来的链条, 递归 __proto__ 最终会访问到
@@ -325,7 +323,7 @@
 
  ![layout viewport](/img/yx-3.png)
 
- #### 总结
+ #### 举例
 
  ```
  function Person(){}
