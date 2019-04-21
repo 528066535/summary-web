@@ -241,6 +241,8 @@
 
  对象数据类型的key存在栈中，value存了堆中的地址，简单的赋值对象，只是复制了一个对象的引用，而引用指向地址的值改变，引用自身的地址并没有改变。
 
+ 以下几个深拷贝不考虑RegExp、Error、Function 的数据类型。
+
  #### 根据上述情况，可以有一种深拷贝的方式。新建一个对象，并且用递归的方式复制对象中的深层基础数据类型的值。
 
  ```
@@ -267,4 +269,37 @@
       return o;
   }
  ```
+
+ 这里需要注意 Date 对象直接赋值结果是赋值了toString()后的结果，valueOf的结果相当于getTime()后的时间戳，所以复制 Date对象需要重新定义
+ Date 对象。
+
+ #### 借用JSON对象的parse和stringify
+
+ ```
+  function deepClone(obj){
+      let _obj = JSON.stringify(obj),
+          objClone = JSON.parse(_obj);
+      return objClone
+  }
+ ```
+
+ 注意（缺点）：
+
+ (1) Date对象也会被改成字符串形式。所以这里可以考虑时间用时间戳来存储。
+
+ (2) 如果有 undefined ，则会默认删除当前的 key。
+
+ (3) NaN 会变成 null。
+
+ (4) JSON.parse()不允许最后一个键值对后面存在逗号。
+
+ ```
+  var jsObject = JSON.parse("[1, 2, 3, 4, ]");
+  //Uncaught SyntaxError: Unexpected token ] in JSON at position 13
+  var jsObject = JSON.parse("{ \"foo\" : 1, }");
+  //Uncaught SyntaxError: Unexpected token } in JSON at position 13
+ ```
+
+ #### Object.assign(a,b) 只能深拷贝第一层, 深层的还是浅拷贝.
+
 
