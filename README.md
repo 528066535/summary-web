@@ -11,6 +11,8 @@
 
   #### [5. 原型和原型链(2)](/file/yx-2.md)
 
+  #### [6. 原型和原型链之实现继承的6种方式(3)](/file/yx-3.md)
+
   #### [6. Promise ](/file/promise.md)
 
   #### [7. 跨域 ](/file/promise.md)
