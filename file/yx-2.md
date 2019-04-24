@@ -37,7 +37,7 @@
 
     // 4) 原型对象的任何属性修改，都会影响到实例。
     Student.prototype.head = '笨的脑袋瓜子';
-    console.log(stu1.head); //笨的脑袋瓜子
+    console.log(stu1.head); //聪明的脑袋瓜子
     console.log(stu2.head); //笨的脑袋瓜子
   ```
 
