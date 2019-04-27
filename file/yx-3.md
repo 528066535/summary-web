@@ -1,9 +1,245 @@
 
     开心，一个继承可以写三章
 
- ### 一. Class
+ ### 一. Class 介绍
 
- #### Class 介绍
+ #### 简单的例子
+
+ ES5 的继承前面用了两章来描述，其实现方式确实很复杂，对于新手来说上手难。
+
+ ES6 引入 Class 概念, 用来实现继承, ES6 的 Class 可以实现绝大部分 ES5中的继承, Class 更加注重面向对象，并且和 c++ java 语言开始有共性之处。
+
+ ES6 的类，完全可以看作构造函数的另一种写法。
+
+ ```
+ class Point {
+   doSomeThing() {
+       console.log('doSomeThing');
+   }
+ }
+
+ // 1) class 声明的对象也是 function 对象
+ typeof Point // "function"
+ // 2) 和 ES5 保持一致 原型对象的 constructor 指向构造函数
+ Point === Point.prototype.constructor // true
+
+ var b = new Point();
+ b.Point() // "doSomeThing"
+ ```
+
+ 注意：构造函数的prototype属性，在 ES6 的“类”上面继续存在。事实上，类的所有方法都定义在类的prototype属性上面。
+ 另外，类的内部所有定义的方法，都是不可枚举的（non-enumerable）。
+
+ #### constructor
+
+ constructor方法是类的默认方法，通过new命令生成对象实例时，自动调用该方法。一个类必须有constructor方法，如果没有显式定义，
+ 一个空的constructor方法会被默认添加。constructor方法默认返回实例对象（即this），完全可以指定返回另外一个对象。
+
+ ```
+ class Foo {
+   constructor() {
+     return Object.create(null);
+   }
+ }
+
+ new Foo() instanceof Foo
+ // false
+ ```
+
+ 注意：类必须使用new调用，否则会报错。
+
+ #### 类的实例
+
+  与 ES5 一样，实例的属性除非显式定义在其本身（即定义在this对象上），否则都是定义在原型上（即定义在class上）。
+
+  ```
+  //定义类
+  class Point {
+
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+
+    toString() {
+      return '(' + this.x + ', ' + this.y + ')';
+    }
+
+  }
+
+  var point = new Point(2, 3);
+
+  point.toString() // (2, 3)
+
+  point.hasOwnProperty('x') // true
+  point.hasOwnProperty('y') // true
+  point.hasOwnProperty('toString') // false
+  point.__proto__.hasOwnProperty('toString') // true
+  ```
+
+ #### Class 表达式
+
+ 与函数一样，类也可以使用表达式的形式定义。
+
+ ```
+ const MyClass = class Me {
+   getClassName() {
+     return Me.name;
+   }
+ };
+ ```
+
+ 注意：上面代码使用表达式定义了一个类。需要注意的是，这个类的名字是Me，但是Me只在 Class 的内部可用，指代当前类。在 Class 外部，这个类只能用MyClass引用。
+
+ #### static 静态方法
+
+ (1) 类相当于实例的原型，所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。
+
+ ```
+ class Foo {
+   static classMethod() {
+     return 'hello';
+   }
+ }
+
+ Foo.classMethod() // 'hello'
+
+ var foo = new Foo();
+ foo.classMethod()
+ // TypeError: foo.classMethod is not a function
+ ```
+
+ (2) 如果静态方法包含this关键字，这个this指的是类，而不是实例。
+
+ ```
+ class Foo {
+   static bar() {
+     this.baz();
+   }
+   static baz() {
+     console.log('hello');
+   }
+   baz() {
+     console.log('world');
+   }
+ }
+
+ Foo.bar() // hello
+ ```
+
+ (3) 父类的静态方法，可以被子类继承。
+
+ (4) 静态方法也是可以从super对象上调用的。
+
+ ```
+ class Foo {
+   static classMethod() {
+     return 'hello';
+   }
+ }
+
+ class Bar extends Foo {
+   static classMethod() {
+     return super.classMethod() + ', too';
+   }
+ }
+
+ Bar.classMethod() // "hello, too"
+ ```
+
+ #### 实例属性的新写法
+
+ 实例属性除了定义在constructor()方法里面的this上面，也可以定义在类的最顶层。
+
+ ```
+ class IncreasingCounter {
+   constructor() {
+     this._count = 0;
+   }
+   get value() {
+     console.log('Getting the current value!');
+     return this._count;
+   }
+   increment() {
+     this._count++;
+   }
+ }
+
+ // 同上
+ class IncreasingCounter {
+   _count = 0;
+   get value() {
+     console.log('Getting the current value!');
+     return this._count;
+   }
+   increment() {
+     this._count++;
+   }
+ }
+
+ // 最佳写法
+ class foo {
+   bar = 'hello';
+   baz = 'world';
+
+   constructor() {
+     // ...
+   }
+ }
+ ```
+
+ #### new.target 属性
+
+ new是从构造函数生成实例对象的命令。ES6 为new命令引入了一个new.target属性，该属性一般用在构造函数之中，返回new命令作用于的那个构造函数。
+ 如果构造函数不是通过new命令或Reflect.construct()调用的，new.target会返回undefined，因此这个属性可以用来确定构造函数是怎么调用的。
+
+ ```
+ function Person(name) {
+   if (new.target !== undefined) {
+     this.name = name;
+   } else {
+     throw new Error('必须使用 new 命令生成实例');
+   }
+ }
+
+ // 另一种写法
+ function Person(name) {
+   if (new.target === Person) {
+     this.name = name;
+   } else {
+     throw new Error('必须使用 new 命令生成实例');
+   }
+ }
+
+ var person = new Person('张三'); // 正确
+ var notAPerson = Person.call(person, '张三');  // 报错
+ ```
+
+ 子类继承父类时，new.target会返回子类。利用这个特点，可以写出不能独立使用、必须继承后才能使用的类。
+
+ ```
+ class Shape {
+   constructor() {
+     if (new.target === Shape) {
+       throw new Error('本类不能实例化');
+     }
+   }
+ }
+
+ class Rectangle extends Shape {
+   constructor(length, width) {
+     super();
+     // ...
+   }
+ }
+
+ var x = new Shape();  // 报错
+ var y = new Rectangle(3, 4);  // 正确
+ ```
+
+ ### 二. Class 继承
+
+ #### extends
 
  可以通过extends关键字实现继承，相比于ES5，这种方式要简单很多。
 
@@ -37,7 +273,7 @@
  #### super
 
 
- ### 总结
+ ### 三. 总结
 
  ES5中的继承：
 
