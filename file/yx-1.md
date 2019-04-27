@@ -82,15 +82,18 @@
 
  #### 总结
 
+    无论什么时候，只要创建了一个新函数，就会根据一组特定的规则为该函数创建一个prototype属性，这个属性指向函数的原型对象。在默认情况下，
+    所有原型对象都会自动获得一个constructor（构造函数）属性，这个属性包含一个指向prototype 属性所在函数的指针”
+
  new 的过程分为三步
 
  var p = new Person('张三',20);
 
  1) var p={}; 初始化一个对象p
 
- 2) p._proto_=Person.prototype;，将对象p的 __proto__ 属性设置为 Person.prototype
+ 2) p._proto_ = Person.prototype;，将对象p的 __proto__ 属性设置为 Person.prototype
 
- 3) Person.call(p,”张三”,20);调用构造函数Person来初始化p。关于call/apply使用
+ 3) Person.call(p,”张三”,20);调用构造函数Person来初始化p。
 
  ### 二. __proto__
 
@@ -155,5 +158,7 @@
   console.log(dog.price) //undefined
   console.log(tidy.price) // 2000
  ```
+
+ 5. 我们可以称 animal 是 dog 的超类，dog 是 animal 的子类。
 
 
