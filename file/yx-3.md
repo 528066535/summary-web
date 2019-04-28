@@ -272,6 +272,49 @@
 
  #### super
 
+ super这个关键字，既可以当作函数使用，也可以当作对象使用。在这两种情况下，它的用法完全不同。
+
+ (1) super 作为函数调用时，代表父类的构造函数。
+
+ 注意：子类的构造函数必须执行一次super函数。super执行时，this表示子类实例。super() 只能用在子类的构造函数之中，用在其他地方就会报错。
+
+ (2) super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。
+
+ 注意：由于super指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过super调用的。
+
+ ```
+ //例1
+ class A {
+   constructor() {
+     this.p = 2;
+   }
+ }
+
+ class B extends A {
+   get m() {
+     return super.p;
+   }
+ }
+
+ let b = new B();
+ b.m // undefined
+
+ //例2
+ class A {}
+ A.prototype.x = 2;
+
+ class B extends A {
+   constructor() {
+     super();
+     console.log(super.x) // 2
+   }
+ }
+
+ let b = new B();
+ ```
+
+
+
 
  ### 三. 总结
 
