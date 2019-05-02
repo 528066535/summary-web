@@ -15,11 +15,14 @@
 
   #### [7. 原型和原型链之ES6](/file/yx-3.md)
 
-  #### [8. Promise ](/file/promise.md)
+  #### [8. 提高项目开发效率之 如果后台接口未完成前端如何自己造数据？ ](/file/mock.md)
 
-  #### [9. 跨域 ](/file/promise.md)
+  #### [9. 跨域 ](/file/ky.md)
 
-  #### [10. HTTP ](/file/promise.md)
+  #### [10. HTTP ](/file/http.md)
 
   #### [11. 回流，重绘 ](/file/promise.md)
+
+  #### [12. Promise ](/file/promise.md)
+
 
