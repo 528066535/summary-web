@@ -3,7 +3,7 @@
 
 ### 一. 跨域问题
 
- #### (1) 浏览器同源策略
+ #### 浏览器同源策略
 
  如果两个页面的协议，端口（如果有指定）和主机都相同，则两个页面具有相同的源。
 
@@ -13,13 +13,13 @@
 
  * 主机:域名不同
 
- #### (2) 不涉及跨域的情况
+ #### 不涉及跨域的情况
 
  凡是拥有scr这个属性的标签都可以跨域例如<script> <img> <iframe>
 
 ### 二. Cookie sessionStorage localStorage 对比
 
- #### (1) Cookie
+ #### Cookie
 
  网景公司当时一名员工Lou Montulli，在1994年将“cookies”的概念应用于网络通信，用来解决用户网上购物的购物车历史记录，这就是它的由来，
  目前所有浏览器都支持cookies。
@@ -50,7 +50,7 @@
  注意：一个WEB站点可以给一个WEB浏览器发送多个Cookie，一个WEB浏览器也可以存储多个WEB站点提供的Cookie。浏览器一般只允许存放300个Cookie，
  每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。
 
- #### (2) sessionStorage
+ #### sessionStorage
 
  sessionStorage 用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。
 
@@ -64,7 +64,7 @@
  ```
  注意：刷新界面数据还在。
 
- #### (3) localStorage
+ #### localStorage
 
  IE8以上的IE版本才支持localStorage，并且存储的值类型限定为string类型，而localStorage与sessionStorage的唯一一点区别就是 localStorage
  属于永久性存储
@@ -87,13 +87,13 @@
  当服务器把用户的登录信息存储在 Cookie 中，攻击者就可以获取到 Cookie 中的信息，再去请求对应服务器，而服务器不能识别是用户还是攻击者，
  这样则会引发安全问题了。
 
- #### (1) 漏洞
+ #### 漏洞
 
  * CSRF 漏洞
 
 
 
- ### (2) 如何增加安全性
+ ### 如何增加安全性
 
  * 禁止javascript操作cookie（为避免跨域脚本(xss)攻击，通过javascript的document.cookie无法访问带有HttpOnly标记的cookie。）
 
@@ -101,16 +101,16 @@
 
 ### 四. 跨域的解决方案
 
- #### (1) jsonp
+ #### jsonp
 
  注意：jsonp 的方式只能是 get 请求
 
- #### (2) iframe
+ #### iframe
 
- #### (3) CORS
+ #### CORS
 
- #### (4) 代理
+ #### 代理
 
 ### 五. 同源策略限制下Dom查询的正确打开方式
 
- #### (1) postMessage
+ #### postMessage
