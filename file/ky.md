@@ -17,7 +17,7 @@
 
  凡是拥有scr这个属性的标签都可以跨域例如<script> <img> <iframe>
 
-### 二. Cookie Session localStorage 对比
+### 二. Cookie sessionStorage localStorage 对比
 
  #### (1) Cookie
 
@@ -50,9 +50,37 @@
  注意：一个WEB站点可以给一个WEB浏览器发送多个Cookie，一个WEB浏览器也可以存储多个WEB站点提供的Cookie。浏览器一般只允许存放300个Cookie，
  每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。
 
- #### (2) Session
+ #### (2) sessionStorage
 
+ sessionStorage 用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。
 
+ sessionStorage 的存储限制一般为5MB
+
+ ```
+ sessionStorage.setItem("key", "value"); //保存数据
+ var lastname = sessionStorage.getItem("key"); //读取数据
+ sessionStorage.removeItem("key"); //删除指定键
+ sessionStorage.clear(); //删除所有数据
+ ```
+ 注意：刷新界面数据还在。
+
+ #### (3) localStorage
+
+ IE8以上的IE版本才支持localStorage，并且存储的值类型限定为string类型，而localStorage与sessionStorage的唯一一点区别就是 localStorage
+ 属于永久性存储
+
+ 注意：localStorage在浏览器的隐私模式下面是不可读取的，localStorage本质上是对字符串的读取，如果存储内容多的话会消耗内存空间，会导致页面变卡
+
+ ```
+ // 存储值
+ localStorage.setItem("a",3);  //或者 localStorage.a = 3;
+ // 读取值
+ localStorage.getItem("a"); //或者 localStorage.a;
+ // 删除指定键
+ storage.removeItem("a");
+ // 清空所有值
+ storage.clear();
+ ```
 
 ### 三. 安全问题
 
