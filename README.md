@@ -15,7 +15,7 @@
 
   #### [7. 原型和原型链 之 ES6](/file/yx-3.md)
 
-  #### [8. 提高项目开发效率 之 如果后台接口未完成前端如何自己造数据？ ](/file/mock.md)
+  #### [8. 提高项目开发效率 之 如果后台接口未完成前端如何自己造数据](/file/mock.md)
 
   #### [9. 存储和跨域 ](/file/ky.md)
 
@@ -23,8 +23,13 @@
 
   #### [11. HTTP ](/file/http.md)
 
-  #### [12. 回流，重绘 ](/file/promise.md)
+  #### [12. 性能优化 之 首帧优化](/file/szyh.md)
 
-  #### [13. Promise ](/file/promise.md)
+  #### [13. 回流，重绘 ](/file/promise.md)
+
+  #### [14. Promise ](/file/promise.md)
+
+
+
 
 

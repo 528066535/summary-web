@@ -83,16 +83,52 @@
 
 ### 三. 跨域的解决方案
 
+ 我们知道浏览器有同源策略，不能访问其他非同源的数据文件，但是有时候我们又必须请求其他服务器的数据，这时候就需要跨域请求来解决我们遇到的问题了。
+
  #### jsonp
 
- 注意：jsonp 的方式只能是 get 请求
+ 自己用 nodejs 和 jquery 实现的 jsonp 获取数据，来增加写代码的乐趣。
+
+ jsonp 的原理是利用了 script 等标签可以在非同源的情况下，获取到数据来实现的，但是 jsonp 又必须是 get 请求，又需要后台设置 callback 回调
+ 函数返回 json 数据。
+
+ '''
+ //nodejs 服务器代码
+ module.exports=function(req,res){
+     let data = JSON.stringify({code:200,data:"this is a get request"});
+     //假设我们定义的回调函数名为test
+     var callback = 'test'+'('+data+');';
+     res.end(callback);
+ }
+
+ //前端利用 jquery
+ jquery.ajax({
+     url:"http://localhost:3000/api/get.json",
+     type: 'get',
+     dataType:"jsonp",   //必须指定
+     jsonpCallback: "test",  //指定回调函数名称
+
+     success:function(data){
+         var result = JSON.stringify(data); //json对象转成字符串
+         //业务逻辑执行代码
+         console.log(data);
+     }
+ });
+
+ //前端用 script 标签实现 要先声明回调函数，不然会报未声明的错
+ <script type="text/javascript" type="text/javascript">
+     var test = function test(data){
+         console.log('script:');
+         console.log(data);
+     }
+ </script>
+ <script src='http://localhost:3000/api/get.json'></script>
+ '''
 
  #### iframe
 
- #### CORS
-
  #### 代理
 
-### 五. 同源策略限制下Dom查询的正确打开方式
+### 四. 同源策略限制下Dom查询的正确打开方式
 
  #### postMessage
