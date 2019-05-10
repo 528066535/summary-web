@@ -17,19 +17,16 @@
 
   #### [8. 提高项目开发效率 之 如果后台接口未完成前端如何自己造数据](/file/mock.md)
 
-  #### [9. 存储和跨域 ](/file/ky.md)
+  #### [9. 跨域 ](/file/ky.md)
 
   #### [10. 前端安全 ](/file/safe.md)
 
-  #### [11. HTTP ](/file/http.md)
+  #### [11. 性能优化 之 回流，重绘 ](/file/hc.md)
 
-  #### [12. 性能优化 之 首帧优化](/file/szyh.md)
+  #### [12. HTTP ](/file/http.md)
 
-  #### [13. 回流，重绘 ](/file/promise.md)
+  #### [13. 性能优化 之 首帧优化](/file/szyh.md)
 
-  #### [14. Promise ](/file/promise.md)
+  #### [14. Promise 和 event loop](/file/promise.md)
 
-
-
-
-
+  #### [15. 算法 ](/file/promise.md)

@@ -17,71 +17,116 @@
 
  凡是拥有scr这个属性的标签都可以跨域例如 <script> <img> <iframe>，form表达也可以跨域请求。
 
-### 二. Cookie sessionStorage localStorage 对比
+### 二. 跨域的解决方案之 iframe
 
- #### Cookie
+ #### 同主域下面，不同子域之间的跨域
 
- 网景公司当时一名员工Lou Montulli，在1994年将“cookies”的概念应用于网络通信，用来解决用户网上购物的购物车历史记录，这就是它的由来，
- 目前所有浏览器都支持cookies。
+ 同主域，不同子域跨域，设置相同的document.domian就可以解决;
 
- Cookie 以名/值对形式存储，username=John Doe。
+ 父页访问子页，可以document.getElementById("myframe").contentWindow.document来访问iframe页面的内容；如果支持 contentDocument
+ 也可以直接document.getElementById("myframe").contentDocument访问子页面内容；
 
- 一个cookie如上4个重要的属性:
+ 步骤：
 
- * maxAge:cookie 被客户端保持的时间,单位为(秒),正数表示在指定的秒数后过期被客户端删除,0表示删除此cookie(置空),负数则表示此 cookie
- 不会被客户端存储,将在浏览器关闭后清除.
+ 1) 创建iframe - 在a.html文件中，动态创建iframe元素/标签
 
- * domain:cookie可被有效操作的域,可以为ip/hostname等,不过需要声 明:*.abc.com,.abc.com,abc.com这三种方式会有区别,客户端会做简单的匹配.
- 多数情况下直接使用abc.com可以接受多级子 域名.只有正确匹配domain的cookie才会被发送给server.
+ 2) 视觉控制 - 为了让用户无法看到这个iframe元素/标签，需要使用CSS将其移出可视区
 
- * secure:是否只允许安全加密url访问,默认为false,如果为true,那么cookie只对https/SSL等加密连接才会发送给server.
+ 3) 设置domain - 为了保证a.html与b.html的访问能够顺畅进行，需要为两个文件均定义domain，即将document.domain设置为“主域名”
 
- * path:cookie对domain何路径下访问有效,"/"表示domain下根目录中所有请求有效,"/open"表示只对domain /open目录下请求有效,
- 如果此path忘记设置,你将遇到一个很尴尬的问题:明明在其他页面设置了cookie输出,但是换个页面却死活不行.
-
- 注意：domain和path是决定可跨域的2个参数.对于domain,"abc.com"则可以在abc.com主域名之下的多级子域名有效,"
- .abc.com"只能在二级域名以及 www.abc.com 下有效,其实客户端只是做了简单的匹配.你可以在此基础上做更多的分级控制.path是个有参考意义的属性,
- 对于部分路径下开放访问的系统有意义,比如:abc.com/open下的程序和登录是开放给特殊开发者接入的,这里的数据活着cookie需要做一些另类的处理..
-
- 如果创建了一个cookie，并将他发送到浏览器，默认情况下它是一个会话级别的cookie（即存储在浏览器的内存中），用户退出浏览器之后即被删除。
- 若希望浏览器将该cookie存储在磁盘上，则需要使用maxAge，并给出一个以秒为单位的时间。将最大时效设为0则是命令浏览器删除该cookie。
-
- 注意：一个WEB站点可以给一个WEB浏览器发送多个Cookie，一个WEB浏览器也可以存储多个WEB站点提供的Cookie。浏览器一般只允许存放300个Cookie，
- 每个站点最多存放20个Cookie，每个Cookie的大小限制为4KB。
-
- #### sessionStorage
-
- sessionStorage 用于临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。
-
- sessionStorage 的存储限制一般为5MB
+ 4) 数据操作与传递 - 在a.html文件中编写好AJAX申请，而这个AJAX的内容就是b.html要负责执行的内容；除了编写好AJAX申请之外，
+ 还需要在a.html文件“命令”b.html去执行
 
  ```
- sessionStorage.setItem("key", "value"); //保存数据
- var lastname = sessionStorage.getItem("key"); //读取数据
- sessionStorage.removeItem("key"); //删除指定键
- sessionStorage.clear(); //删除所有数据
+ //a.html
+ <script>
+    var iframeJquery = null;    // 用于存储iframe中的b.html的jQuery对象
+    function addIframe(cb) {
+         document.domain = 'h5course.com';
+         exec_obj = document.createElement('iframe');
+         exec_obj.src = 'http://B.h5course.com';
+         exec_obj.id = 'newIframe';
+         exec_obj.style.display = 'none';
+         document.body.appendChild(exec_obj);//动态创建一个iframe
+         $('#newIframe').on('load', function(){
+             iframeJquery = $('#newframe')[0].contentWindow.$;
+             cb();
+         })
+    };
+
+    addIframe(function() {
+            iframeJquery.ajax({
+                url: 'http://B.h5course.com/data.php',
+                type: 'GET',
+                success: function(data) {
+                    $('.wrap').html(data);
+                }
+            });
+        });
+ </script>
+
+ //b.html
+ <script src="js/jquery.js"></script>
+ <script>
+     document.domain = 'h5course.com';
+ </script>
  ```
- 注意：刷新界面数据还在。
 
- #### localStorage
+ #### 不同主域跨域
 
- IE8以上的IE版本才支持localStorage，并且存储的值类型限定为string类型，而localStorage与sessionStorage的唯一一点区别就是 localStorage
- 属于永久性存储
+ 步骤：
 
- 注意：localStorage在浏览器的隐私模式下面是不可读取的，localStorage本质上是对字符串的读取，如果存储内容多的话会消耗内存空间，会导致页面变卡
+ 1) www.a.com 下的 a.html 页面设置 iframe 调用 www.b.com 的 b.html。
+ 2) b.html 页面设置 iframe 调用 www.a.com 下的 c.html，b.html是不无法直接访问a.html的对象，因为涉及到跨域，b 在访问 c 的时候，并没有
+ 调用 c 的 js ，只是传递了参数。
+ 3) c.html 和 a.html同域，是可以访问 a 下的对象的，这里的 c 相当于是一个代理。b 可以通过 c 访问 a ，并且 c 中url的内容也是 b 传过来的。
 
  ```
- // 存储值
- localStorage.setItem("a",3);  //或者 localStorage.a = 3;
- // 读取值
- localStorage.getItem("a"); //或者 localStorage.a;
- // 删除指定键
- storage.removeItem("a");
- // 清空所有值
- storage.clear();
+    //a.html
+    <body>
+    <iframe src="http://www.b.com/b.html" ></iframe>
+    <ul id="getText"></ul>
+    <script>
+        function dosome(text){
+            document.getElementById("getText").innerHTML= decodeURI(text);
+        }
+    </script>
+    </body>
+
+    //b.html
+    <body>
+    <iframe id="myfarme" src="###"></iframe>
+    <ul id="ct">
+        <li>这里是内容1</li>
+        <li>这里是内容2</li>
+        <li>这里是内容3</li>
+        <li>这里是内容4</li>
+        <li>这里是内容5</li>
+        <li>这里是内容6</li>
+    </ul>
+    <script>
+        window.onload = function(){
+            var text = document.getElementById('ct').innerHTML;
+            document.getElementById('myfarme').src="http://www.a.com/c.html?content="+encodeURI(text);
+        }
+    </script>
+    </body>
+
+    //c.html
+    <script>
+        window.onload = function(){
+            var text = window.location.href.split('=')[1]
+            console.log(parent.parent)
+            parent.parent.dosome(text);
+        }
+    </script>
+    </head>
+    <body>
+    ddddddddddd
+    </body>
  ```
 
-### 三. 跨域的解决方案
+### 三. 跨域的解决方案之 jsonp
 
  我们知道浏览器有同源策略，不能访问其他非同源的数据文件，但是有时候我们又必须请求其他服务器的数据，这时候就需要跨域请求来解决我们遇到的问题了。
 
@@ -125,10 +170,85 @@
  <script src='http://localhost:3000/api/get.json'></script>
  '''
 
- #### iframe
+### 四. 跨域的解决方案之 CORS
 
- #### 代理
+ 跨域资源共享(CORS) 是一种机制，它使用额外的 HTTP 头来告诉浏览器  让运行在一个 origin (domain) 上的Web应用被准许访问来自不同源服务器上的指定的资源。
+ 当一个资源从与该资源本身所在的服务器不同的域、协议或端口请求一个资源时，资源会发起一个跨域 HTTP 请求。
 
-### 四. 同源策略限制下Dom查询的正确打开方式
+ 出于安全原因，浏览器限制从脚本内发起的跨源HTTP请求。 例如，XMLHttpRequest和Fetch API遵循同源策略。
+ 这意味着使用这些API的Web应用程序只能从加载应用程序的同一个域请求HTTP资源，除非响应报文包含了正确CORS响应头。
+
+ #### CORS 如何设置跨域
+
+ Access-Control-Allow-Origin: 跨域服务器允许的来源地址（跟请求的Origin进行匹配），可以是*或者某个确切的地址，不允许多个地址
+
+ Access-Control-Allow-Methods: 授权请求的方法（GET, POST, PUT, DELETE，OPTIONS等)
+
+ Access-Control-Allow-Headers: HTTP头(Accept,Accept-Language,Content-Language,Last-Event-ID,Content-Type)
+
+ Access-Control-Max-Age: 预请求的返回结果(Access-Control-Allow-Methods和Access-Control-Allow-Headers)可以被缓存的时间，单位秒
+
+ #### nodejs 实现 CORS 跨域
+
+ 自己写了一个 demo 不需要前端配合即可实现跨域请求
+
+ ```
+ function corsTest(req,res){
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+     res.header("Access-Control-Allow-Headers", "Authorization,Origin, X-Requested-With, Content-Type, Accept");
+
+     if (req.method == 'OPTIONS') {
+         res.send(200);   //在正常的请求之前，会发送一个验证，是否可以请求。
+     }
+     else {
+         res.json({code:200,data:"this is a post request"});
+     }
+ };
+
+ router.post('/post.json', corsTest);
+ ```
+
+### 五. Node 代理实现跨域
+
+ 上面两种方式都必须服务器配合，才能实现跨域，如果想自己动手，可以选择这种方案。
+
+ node 作为代理实现跨域的本质是，浏览器发送请求给自己的服务端（node），自己的服务端再转发到需要跨域的服务端，而服务端与服务端之间没有跨域
+ 的问题，达到跨域的目的。
+
+ #### webpack 插件实现跨域
+
+ webpack-dev-server配置代理非常的方便，只需要条件一个proxy属性，然后配置相关的参数就可以了：
+
+ ```
+ devServer: {
+         contentBase: './dist',
+         disableHostCheck: true,
+         host: 'sale',
+         port: 3004,
+         proxy: {
+             "/local-node": {
+                 target: "http://localhost:3000",
+                 pathRewrite: {"^/local-node" : ""}
+             }
+         }
+     },
+ ```
+
+ ### 六. 其他
 
  #### postMessage
+
+ postMessage()方法允许来自不同源的脚本采用异步方式进行有限的通信，可以实现跨文本档、多窗口、跨域消息传递。
+
+ postMessage(data,origin)方法接受两个参数
+
+ 1.data:要传递的数据，html5规范中提到该参数可以是JavaScript的任意基本类型或可复制的对象，然而并不是所有浏览器都做到了这点儿，部分浏览器只能处理字符串参数，
+ 所以我们在传递参数的时候需要使用JSON.stringify()方法对对象参数序列化。
+
+ 2.origin：字符串参数，指明目标窗口的源，协议+主机+端口号[+URL]，URL会被忽略，所以可以不写，这个参数是为了安全考虑，postMessage()
+ 方法只会将message传递给指定窗口，当然如果愿意也可以建参数设置为"*"，这样可以传递给任意窗口，如果要指定和当前窗口同源的话设置为"/"。
+
+ #### websocket
+
+ 这些办法往往不是为了跨域而用到的，而是业务需要，这里就不展开讲了。
