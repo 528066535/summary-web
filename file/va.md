@@ -1,5 +1,5 @@
 
-    我承认,之前我确实不太懂vertical-align属性
+    又重新认识了 vertical-align
 
 ### 一. vertical-align 概念
 
