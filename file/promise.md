@@ -39,16 +39,14 @@
 
  ```
  // bad
- promise
-   .then(function(data) {
+ promise.then(function(data) {
      // success
    }, function(err) {
      // error
    });
 
  // good
- promise
-   .then(function(data) { //cb
+ promise.then(function(data) { //cb
      // success
    })
    .catch(function(err) {
