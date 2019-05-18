@@ -93,7 +93,9 @@
 
   ![visual viewport](/img/sp-3.png)
 
-  c. 除了以上两个viewport,浏览器规定了另外一个更适合移动端的 ideal viewport ,简单地说 ideal viewport 等同于设备的宽度,
+  c. 除了以上两个viewport,浏览器规定了另外一个更适合移动端的 ideal viewport ,首先不需要用户缩放和横向滚动条就能正常的查看网站的所有内容；
+  第二，显示的文字的大小是合适，比如一段14px大小的文字，不会因为在一个高密度像素的屏幕里显示得太小而无法看清，理想的情况是这段14px的文字无论是在何种密度屏幕，
+  何种分辨率下，显示出来的大小都是差不多的。当然，不只是文字，其他元素像图片什么的也是这个道理。简单地说 ideal viewport 等同于设备的宽度,
   ideal viewport并没有固定的尺寸,每款手机都可能不同,苹果手机6一下都是320,[具体查询链接](http://viewportsizes.com/?filter=IOS)
 
  ##### 3. meta
@@ -117,15 +119,15 @@
    css中px设置成320,则可以占满屏幕.那么我们可以知道:
 
     visual viewport宽度 = ideal viewport宽度  / 当前缩放值
-    当前缩放值 = ideal viewport宽度  / visual viewport宽度
+
 
    但是安卓上的原生浏览器以及IE有些问题.安卓自带的webkit浏览器只有在 initial-scale=1 以及没有设置width属性时才是表现正常的,
-   也就相当于这理论在它身上基本没用;而IE则根本不甩initial-scale这个属性,无论你给他设置什么,initial-scale表现出来的效果永远是1.
+   也就相当于这理论在它身上基本没用;而IE则根本不用initial-scale这个属性,无论你给他设置什么,initial-scale表现出来的效果永远是1.
 
    根据测试发现, layout viewport 不管是多少, 在没有指定初始缩放值的时候, iphone和ipad会自动计算这个缩放值, 以保证当前layout viewport
    的宽度在缩放后就是浏览器可视区域的宽度. 计算方法如下:
 
-    前缩放值 = ideal viewport宽度  / visual viewport宽度
+    当前缩放值 = ideal viewport宽度  / visual viewport宽度
 
   ##### 5. 获取屏幕宽度
 
