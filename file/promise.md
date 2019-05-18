@@ -80,8 +80,95 @@
 
  Promise.race方法的参数与Promise.all方法一样，只要p1、p2、p3之中有一个实例率先改变状态，p的状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给p的回调函数。
 
-### 二. 封装 XMLHttpRequest
+### 二. 封装 请求
 
  上一章讲了[XMLHttpRequest](/xml.md)，这里就直接引用上一章封装的 http 拿来再封装一层，实现 Promise。
+
+ ```
+ import http from 'xxx'
+ import doUpload from 'xxx'
+
+ let post = (url, data) => {
+    return new Promise((resolve, reject)=>{
+        http({url, data, (res)=>{
+            resolve(res.data);
+        }, (res)=>{
+            reject(res.data);
+        }, type: 'POST'})
+    })
+ }
+
+ let get = (url, data) => {
+     return new Promise((resolve, reject)=>{
+         http({url, data, (res)=>{
+             resolve(res.data);
+         }, (res)=>{
+             reject(res.data);
+         }, type: 'GET'})
+     })
+ }
+
+ let httpWithMethod = (url, data, type) => {
+     return new Promise((resolve, reject)=>{
+         http({url, data, (res)=>{
+             resolve(res.data);
+         }, (res)=>{
+             reject(res.data);
+         }, type: type})
+     })
+  }
+
+ let upload = (url, file, progress=()=>{}) => {
+    return new Promise((resolve, reject) => {
+        let multiple = Object.prototype.toString.call(files) == '[object Array]' &&
+        doUpload(url, file, progress,(res) => {
+            resolve(res);
+        },(error) => {
+            reject(error);
+        }, multiple)
+    })
+ }
+
+ let apiUrlList = {
+    normal: {
+        userInfo: ['/index/info', 'get']
+    },
+    login: {
+        login: ['/login', 'post']
+    }
+ }
+
+ function link(url) {
+     let realUrl = url;
+     window.open(realUrl, 'download');
+ }
+
+ let apiActionList = {};
+
+ Object.keys(apiUrlList).forEach(apiModel=>{
+    apiActionList[apiModel] = {};
+
+    Object.keys(apiUrlList[apiModel]).forEach((apiItem) => {
+        let url = apiUrlList[apiModel][apiItem][0];
+        let type = apiUrlList[apiModel][apiItem][1]?apiUrlList[apiModel][apiItem][1]:'';
+        apiActionList[apiModel][apiItem] = ((url, type)=>{
+            if(type == 'get') {
+                return get(url, arguments[0]);
+            }
+            else{
+                return post(url, arguments[0]);
+            }
+        })(url, type);
+    })
+ })
+
+ export default {
+     action: apiActionList,
+     link: link,
+     upload: upload,
+     apiUrlList:apiUrlList,
+     httpWithMethod: httpWithMethod
+ }
+ ```
 
 

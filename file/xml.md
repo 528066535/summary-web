@@ -298,7 +298,7 @@
  #### 上传文件，带进度条封装
 
  ```
- var doUpload = function doUpload(url, files, progress, success, error, param) {
+ var doUpload = function doUpload(url, files, progress, success, error, param, multiple=false) {
      if (!url) return;
      if (files) {
          let xhr = new XMLHttpRequest();
@@ -328,13 +328,16 @@
          }, false);
 
          let formData = new FormData();
-         if(Object.prototype.toString.call(files) == '[object Array]'){
+         if(multiple && files.length>0){
             for (let i = 0; i < files.length;i++) {
              　　formData.append('files[]', files[i]);
              }
          }
-         else {
+         else if(!multiple){
             formData.append("file", files);
+         }
+         else {
+            return
          }
 
          if (param) {
