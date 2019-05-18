@@ -31,7 +31,7 @@
 
   #### [15. 网络 之 XMLHTTPRequest ](/file/xml.md)
 
-  #### [16. Promise 和 event loop](/file/promise.md)
+  #### [16. Promise 和 Event Loop](/file/promise.md)
 
   #### [17. 性能优化 之 首帧优化](/file/szyh.md)
 
