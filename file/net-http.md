@@ -68,6 +68,18 @@
  <meta charset="utf-8" />
  ```
 
+ 常见请求类型：
+
+ application/x-www-form-urlencoded：HTTP会将请求参数用key1=val1&key2=val2的方式进行组织，并放到请求实体里面，注意如果是中文或特殊字符如"/"、","、“:"
+ 等会自动进行URL转码。不支持文件，一般用于表单提交。
+
+ multipart/form-data：与application/x-www-form-urlencoded不同，这是一个多部分多媒体类型。首先生成了一个 boundary 用于分割不同的字段，
+ 在请求实体里每个参数以------boundary开始，然后是附加信息和参数名，然后是空行，最后是参数内容。多个参数将会有多个boundary块。如果参数是文件会有特别的文件域。
+ 最后以------boundary–为结束标识。multipart/form-data支持文件上传的格式，一般需要上传文件的表单则用该类型。
+
+ application/json：JSON 是一种轻量级的数据格式，以“键-值”对的方式组织的数据。这个使用这个类型，需要参数本身就是json格式的数据，参数会被直接放到请求实体里，
+ 不进行任何处理。服务端/客户端会按json格式解析数据（约定好的情况下）。
+
  #### Content-Encoding（1.0）
 
  由于发送的数据可以是任何格式，因此可以把数据压缩后再发送。Content-Encoding字段说明数据的压缩方法。
