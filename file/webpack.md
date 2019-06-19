@@ -103,7 +103,7 @@
        },
 
 
-   另附带 ssr 的 github 地址 [vue-project-ssr](https://github.com/528066535/vue-project-ssr)
+ 另附带 ssr 的 github 地址 [vue-project-ssr](https://github.com/528066535/vue-project-ssr)
 
 
 
