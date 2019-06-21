@@ -40,7 +40,11 @@
  另外 webpack4 加入 mode 选项，可以设置成 production 或者 development。但是不能设置 test ，而 test 对应的mode环境是 development
  所以我们还需要 webpack.DefinePlugin 插件来设置 test 环境
 
-#### optimization.splitChunks
+#### optimization.splitChunks 代码分片
+
+ 曾经有过这样的项目，js只有一个，一次加载所有的js代码，包括每个界面的和所有的UI和组件，导致产出的js特别的大。后来，人们开始分包，把不会改变的
+ node_modules 的代码打包在一起，自己的核心公共代码打包在一个js，单独的业务逻辑经常修改的代码打包成一个js来按需加载，这样整个打包的体积会小很多，
+ 并且充分的利用了缓存。最早在使用gulp，就是自己通过管道来控制js包，现在webpack4提供了代码分片直接来配置达到这种目的。
 
  webpack4 废弃了 CommonsChunkPlugin ，用 optimization.splitChunks 替代。optimization.splitChunks 默认不需要配置，如果 mode 是
  production，则开启Code Splitting。
@@ -102,11 +106,11 @@
          },
        },
 
+ 使用 import() 加载的模块及其依赖模块会构建一个 async chunk，并在页面上演示加载
 
- 另附带 ssr 的 github 地址 [vue-project-ssr](https://github.com/528066535/vue-project-ssr)
+ #### vue 项目
 
+ 再vue项目中，vue提供vue.common.js和vue.runtime.common.js供开发者使用，先说一下作用runtime不含编译器，他不会编译template模板。而我们在项目中
+ 使用的vue-loader又会帮我们把模板编译成render渲染函数，而runtime比完整的代码打包后少了100多kb，那么就尽量使用vue.runtime.common.js包吧。
 
-
-
-
-
+ ##### 另附带 ssr 的 github 地址 [vue-project-ssr](https://github.com/528066535/vue-project-ssr)
