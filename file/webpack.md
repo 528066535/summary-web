@@ -108,6 +108,11 @@
 
  使用 import() 加载的模块及其依赖模块会构建一个 async chunk，并在页面上演示加载
 
+ #### runtimeChunk
+
+ 它的作用是将包含chunks 映射关系的 list单独从 app.js里提取出来，因为每一个 chunk 的 id 基本都是基于内容 hash 出来的，所以你每次改动都会影响它，
+ 如果不将它提取出来的话，等于app.js每次都会改变，导致缓存失效。
+
  #### vue 项目
 
  再vue项目中，vue提供vue.common.js和vue.runtime.common.js供开发者使用，先说一下作用runtime不含编译器，他不会编译template模板。而我们在项目中
