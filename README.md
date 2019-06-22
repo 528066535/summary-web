@@ -36,5 +36,3 @@
   #### [17. Promise 和 Event Loop](/file/promise.md)
 
   #### [18. webpack4](/file/webpack.md)
-
-  #### [19. 性能优化 之 首帧优化](/file/szyh.md)

@@ -294,10 +294,10 @@
   function clone (obj) {
       let o = null;
       if (typeof obj === "object") {
-          if(getType.call(obj == '[object Date]') {
+          if(getType.call(obj) == '[object Date]') {
               o = new Date(obj.valueOf());
           }
-          else if (getType.call(obj == '[object Array]') {
+          else if (getType.call(obj) == '[object Array]') {
               o = [];
               for (let i = 0, len = obj.length; i < len; i++) {
                   o.push(clone(obj[i]));
