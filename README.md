@@ -36,5 +36,3 @@
   #### [17. Promise 和 Event Loop](/file/promise.md)
 
   #### [18. webpack4](/file/webpack.md)
-
-  #### [19. 事件](/file/sj.md)
