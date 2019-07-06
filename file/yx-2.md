@@ -98,8 +98,8 @@
      }
      Person.prototype.time = 0;
 
-     // 3) 子类：学生，继承了“人”这个类。 每次新创建 Student 实例的时候都会调用 Student 构造方法，则每个子类实例都会创建各自的 emotion，head
-     //等属性，这里的属性互补影响，并且会覆盖 Student 原型对象上的属性。
+     // 3) 子类：学生，继承了“人”这个类。 每次新创建 Student 实例的时候都会调用 Student 构造方法，每个子类实例都会创建各自的 emotion，head
+     //等属性，这里的属性互不影响，并且会覆盖 Student 原型对象上的属性。
      function Student(studentID) {
        this.studentID = studentID;
        Person.call(this);
