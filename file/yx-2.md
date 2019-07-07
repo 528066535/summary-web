@@ -160,7 +160,7 @@
 
  ```
     function object( o ){
-    var G = function(){};
+       var G = function(){};
        G.prototype = o;
        return new G();
      }
