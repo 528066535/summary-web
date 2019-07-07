@@ -173,6 +173,8 @@
      console.log( obj3.skills ); //php,javascript,python
  ```
 
+ 这种方式有prototype继承的特性
+
  #### 在es5中，新增了一个函数Object.create()实现了原型式继承
 
  ```
