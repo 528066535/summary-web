@@ -289,7 +289,7 @@
  以下几个深拷贝不考虑RegExp、Error、Function 的数据类型。
 
  #### 根据上述情况，可以有一种深拷贝的方式。新建一个对象，并且用递归的方式复制对象中的深层基础数据类型的值。
-a
+
  ```
   function clone (obj) {
       let o = null;
