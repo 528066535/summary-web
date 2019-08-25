@@ -38,3 +38,5 @@
   #### [18. webpack4](/file/webpack.md)
 
   #### [19. 防抖和节流](/file/fdjl.md)
+
+  #### [20. canvas](/file/canvas.md)
