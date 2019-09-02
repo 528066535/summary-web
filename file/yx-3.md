@@ -13,9 +13,9 @@ ES6 的类，完全可以看作构造函数的另一种写法。
 
 ```
 class Point {
-doSomeThing() {
-   console.log('doSomeThing');
-}
+    doSomeThing() {
+       console.log('doSomeThing');
+    }
 }
 
 // 1) class 声明的对象也是 function 对象
