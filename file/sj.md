@@ -291,8 +291,14 @@
  #### 根据上述情况，可以有一种深拷贝的方式。新建一个对象，并且用递归的方式复制对象中的深层基础数据类型的值。
 
  ```
-  function clone (obj) {
+  function clone (obj, map = new WeakMap()) {
       let o = null;
+      if (map.get(target)) {
+          return map.get(target);
+      }
+
+      map.set(target, cloneTarget);
+
       if (typeof obj === "object") {
           if(getType.call(obj) == '[object Date]') {
               o = new Date(obj.valueOf());
