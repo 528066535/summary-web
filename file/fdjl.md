@@ -109,6 +109,8 @@
     ```
 
 方法二（定时器版）：
+
+```
 function throttle(func, wait) {
     let timeout;
     return function() {
@@ -123,3 +125,4 @@ function throttle(func, wait) {
 
     }
 }
+```
