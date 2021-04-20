@@ -104,7 +104,6 @@ npm 目前支持以下几类依赖包管理包括
 
 
 dependencies
-
 devDependencies
 
 optionalDependencies 可选择的依赖包
