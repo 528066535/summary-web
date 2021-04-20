@@ -104,6 +104,7 @@ npm 目前支持以下几类依赖包管理包括
 
 
 dependencies
+
 devDependencies
 
 optionalDependencies 可选择的依赖包
@@ -114,3 +115,48 @@ bundledDependencies 捆绑依赖包
 
 
 下面我们来看一下这几种依赖的区别以及各自的应用场景：
+
+#### dependencies
+
+dependencies 是无论在开发环境还是在生产环境都必须使用的依赖，是我们最常用的依赖包管理对象，例如 React，Loadsh，Axios 等，
+通过 npm install XXX 下载的包都会默认安装在 dependencies 对象中，也可以使用  npm install XXX --save 下载  dependencies 中的包；
+
+#### devDependencies
+
+devDependencies 是指可以在开发环境使用的依赖，例如 eslint，debug 等，通过 npm install packageName --save-dev 下载的包都会在 devDependencies 对象中；
+
+dependencies 和 devDependencies 最大的区别是在打包运行时，执行 npm install 时默认会把所有依赖全部安装，但是如果使用 npm install --production 
+时就只会安装 dependencies 中的依赖，如果是 node 
+
+#### optionalDependencies
+
+optionalDependencies 指的是可以选择的依赖，当你希望某些依赖即使下载失败或者没有找到时，项目依然可以正常运行或者 npm 继续运行的时，
+就可以把这些依赖放在 optionalDependencies 对象中，但是 optionalDependencies 会覆盖 dependencies 中的同名依赖包，所以不要把一个包同时写进两个对象中。
+
+#### peerDependencies
+
+peerDependencies 用于指定你当前的插件兼容的宿主必须要安装的包的版本，这个是什么意思呢？举个例子🌰：我们常用的 react 组件库 ant-design@3.x 的 package.json 中的配置如下：
+
+```$xslt
+"peerDependencies": { 
+  "react": ">=16.9.0", 
+  "react-dom": ">=16.9.0" 
+ }, 
+```
+
+假设我们创建了一个名为 project 的项目，在此项目中我们要使用 ant-design@3.x 这个插件，此时我们的项目就必须先安装 React >= 16.9.0 和 React-dom >= 16.9.0 的版本。
+
+在 npm 2 中，当我们下载 ant-design@3.x 时，peerDependencies 中指定的依赖会随着 ant-design@3.x 一起被强制安装，所以我们不需要在宿主项目的 package.json 
+文件中指定 peerDependencies 中的依赖，但是在 npm 3 中，不会再强制安装 peerDependencies 中所指定的包，而是通过警告的方式来提示我们，
+此时就需要手动在 package.json 文件中手动添加依赖；
+
+#### bundledDependencies
+
+这个依赖项也可以记为 bundleDependencies，与其他几种依赖项不同，他不是一个键值对的对象，而是一个数组，数组里是包名的字符串，例如：
+
+当使用 npm pack 的方式来打包时，上述的例子会生成一个 project-1.0.0.tgz 的文件，在使用了 bundledDependencies 后，打包时会把 Axios 和 Lodash 这两个依赖一起放入包中，
+之后有人使用 npm install project-1.0.0.tgz 下载包时，Axios 和 Lodash 这两个依赖也会被安装。需要注意的是安装之后 Axios 和 Lodash 这两个包的信息在 dependencies 中，
+并且不包括版本信息。
+
+
+如果我们使用常规的 npm publish 来发布的话，这个属性是不会生效的，所以日常情况中使用的较少
